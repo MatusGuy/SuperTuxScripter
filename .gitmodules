@@ -1,0 +1,15 @@
+[submodule "external/supertux"]
+	path = external/supertux2_lib
+	url = https://github.com/SuperTux/supertux
+[submodule "external/squirrel"]
+	path = external/squirrel
+	url = https://github.com/albertodemichelis/squirrel
+[submodule "external/tinygettext"]
+	path = external/tinygettext
+	url = https://github.com/SuperTux/tinygettext
+[submodule "external/SDL_ttf"]
+	path = external/SDL_ttf
+	url = https://github.com/SuperTux/SDL_ttf
+[submodule "external/glm"]
+	path = external/glm
+	url = https://github.com/g-truc/glm
