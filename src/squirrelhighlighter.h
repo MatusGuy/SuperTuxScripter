@@ -4,6 +4,9 @@
 #include <QSyntaxHighlighter>
 #include <QStringList>
 #include <QRegularExpressionMatchIterator>
+#include <QQuickTextDocument>
+#include <QtQml>
+
 #include <array>
 
 struct HighlightBlock {
@@ -13,9 +16,45 @@ struct HighlightBlock {
     QTextCharFormat format;
 };
 
-class SquirrelHighlighter : public QSyntaxHighlighter {
+class QuickSyntaxHighlighter : public QSyntaxHighlighter {
+    Q_OBJECT
+    QML_ELEMENT
+    Q_PROPERTY(
+        QQuickTextDocument* textDocument
+        READ textDocument
+        WRITE setTextDocument
+        NOTIFY textDocumentChanged
+        REQUIRED
+    )
+
 public:
-    SquirrelHighlighter(QTextDocument* parent);
+    QuickSyntaxHighlighter(QQuickTextDocument* doc = nullptr): QSyntaxHighlighter((QTextDocument*) nullptr) {
+        setTextDocument(doc);
+    }
+
+    inline QQuickTextDocument* textDocument() {
+        return m_doc;
+    }
+
+    inline void setTextDocument(QQuickTextDocument* doc) {
+        m_doc = doc;
+        setDocument(doc != nullptr ? doc->textDocument() : nullptr);
+        emit textDocumentChanged(m_doc);
+    }
+
+signals:
+    void textDocumentChanged(QQuickTextDocument*);
+
+private:
+    QQuickTextDocument* m_doc;
+};
+
+class SquirrelHighlighter : public QuickSyntaxHighlighter {
+    Q_OBJECT
+    QML_ELEMENT
+
+public:
+    SquirrelHighlighter(QQuickTextDocument* doc = nullptr);
 
     // QSyntaxHighlighter interface
 protected:

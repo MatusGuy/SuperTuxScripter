@@ -1,8 +1,9 @@
 #include "squirrelhighlighter.h"
 
-SquirrelHighlighter::SquirrelHighlighter(
-    QTextDocument* parent
-): QSyntaxHighlighter(parent), m_normal_format(".*", QColor(Qt::white), QFont::Normal) {
+SquirrelHighlighter::SquirrelHighlighter(QQuickTextDocument* doc):
+    QuickSyntaxHighlighter(doc),
+    m_normal_format(".*", QColor(Qt::white), QFont::Normal)
+{
     std::reverse(std::begin(m_blocks), std::end(m_blocks));
 }
 

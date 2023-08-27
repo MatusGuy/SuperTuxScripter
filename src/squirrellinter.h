@@ -3,13 +3,12 @@
 
 #include <QObject>
 
-#include <string>
-
 #include <squirrel.h>
 #include <sqconfig.h>
 
 class SquirrelLinter : public QObject {
     Q_OBJECT
+
 public:
     explicit SquirrelLinter(QObject *parent = nullptr);
     ~SquirrelLinter();
