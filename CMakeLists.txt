@@ -2,9 +2,6 @@ cmake_minimum_required(VERSION 3.5)
 
 project(SuperTuxScripter VERSION 0.1 LANGUAGES CXX)
 
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOMOC ON)
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -22,6 +19,9 @@ cache_set(TINYGETTEXT_PATH "${PROJECT_SOURCE_DIR}/external/tinygettext/" STRING)
 add_subdirectory(external/tinygettext)
 
 add_subdirectory(external/SDL_ttf)
+
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOMOC ON)
 
 find_package(Qt6 COMPONENTS Core Gui Quick QuickControls2 REQUIRED)
 include(cmake/deps.cmake)
@@ -46,4 +46,9 @@ target_link_libraries(SuperTuxScripter PUBLIC Qt::Core Qt::Gui Qt::Quick Qt::Qui
 
 add_external_target_dependency(SuperTuxScripter supertux2_lib)
 
-target_include_directories(SuperTuxScripter PUBLIC src/ external/supertux/external/squirrel/include)
+target_include_directories(SuperTuxScripter PUBLIC src/)
+
+if(MSVC)
+    # what??? ok...
+    target_link_options(SuperTuxScripter PUBLIC "/ENTRY:mainCRTStartup")
+endif()

@@ -3,7 +3,17 @@
 #include <QQuickWindow>
 #include <QQuickStyle>
 
+// This is a Qt macro
+#ifdef foreach
+#undef foreach
+#endif
+// In modern days, it's useless, but I don't mind that
+// Sadly, it interferes with tinygettext
+// Farewell.
+
 #include "squirrelhighlighter.h"
+#include "levelscriptsmodel.h"
+
 
 const QUrl g_url(u"qrc:/qml/MainWindow.qml"_qs);
 
@@ -20,6 +30,8 @@ int main(int argc, char *argv[]) {
     qmlRegisterType<QuickSyntaxHighlighter>("Code", 1, 0, "SyntaxHighlighter");
 
     qmlRegisterType<SquirrelHighlighter>("Squirrel", 1, 0, "SquirrelHighlighter");
+
+    qmlRegisterType<LevelScriptsModel>("SuperTux", 1, 0, "LevelScriptsModel");
 
     QQuickStyle::setStyle("Material");
     QQuickWindow::setTextRenderType(QQuickWindow::NativeTextRendering);
