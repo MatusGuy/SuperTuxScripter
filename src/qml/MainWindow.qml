@@ -1,17 +1,19 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Shapes
 
 import Squirrel
 import SuperTux
 
 ApplicationWindow {
+    id: window
     visible: true
     width: 800
     height: 600
     title: Application.name
 
-
+    Material.theme: Material.Dark
 
     RowLayout {
         anchors.fill: parent
@@ -26,10 +28,6 @@ ApplicationWindow {
             }
             delegate: Label {
                 text: model.name
-
-                Component.onCompleted: {
-                    console.log(model)
-                }
             }
         }
 
@@ -38,6 +36,8 @@ ApplicationWindow {
 
             Layout.fillWidth:  true
             Layout.fillHeight: true
+
+            cursorDelegate: TextCursor {}
 
             font.pointSize: 15
             font.family: "Consolas"
