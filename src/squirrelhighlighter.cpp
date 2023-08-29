@@ -2,7 +2,7 @@
 
 SquirrelHighlighter::SquirrelHighlighter(QQuickTextDocument* doc):
     QuickSyntaxHighlighter(doc),
-    m_normal_format(".*", QColor(Qt::white), QFont::Normal)
+    m_normal_format(".*", QColor(Qt::black), QFont::Normal)
 {
     std::reverse(std::begin(m_blocks), std::end(m_blocks));
 }

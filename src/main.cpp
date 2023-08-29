@@ -1,7 +1,9 @@
 #include <QGuiApplication>
+#include <QFileSystemModel>
 #include <QQmlApplicationEngine>
 #include <QQuickWindow>
 #include <QQuickStyle>
+#include <QPalette>
 
 // This is a Qt macro
 #ifdef foreach
@@ -11,9 +13,11 @@
 // Sadly, it interferes with tinygettext
 // Farewell.
 
+#define SDL_MAIN_HANDLED
+#include <supertux/main.hpp>
+
 #include "squirrelhighlighter.h"
 #include "levelscriptsmodel.h"
-
 
 const QUrl g_url(u"qrc:/qml/MainWindow.qml"_qs);
 
@@ -27,13 +31,14 @@ int main(int argc, char *argv[]) {
 
     QQmlApplicationEngine engine;
 
+    qmlRegisterType<QuickFileSystemModel>("Code", 1, 0, "FileSystemModel");
     qmlRegisterType<QuickSyntaxHighlighter>("Code", 1, 0, "SyntaxHighlighter");
 
     qmlRegisterType<SquirrelHighlighter>("Squirrel", 1, 0, "SquirrelHighlighter");
 
     qmlRegisterType<LevelScriptsModel>("SuperTux", 1, 0, "LevelScriptsModel");
 
-    QQuickStyle::setStyle("Material");
+    QQuickStyle::setStyle("Basic");
     QQuickWindow::setTextRenderType(QQuickWindow::NativeTextRendering);
 
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

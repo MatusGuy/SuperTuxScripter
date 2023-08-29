@@ -1,23 +1,21 @@
 import QtQuick
-import QtQuick.Controls
-import QtQuick.Layouts
-import QtQuick.Shapes
-
-import Squirrel
-import SuperTux
 
 Item {
+    id: root
+
+    visible: parent.activeFocus
     width: 1
     Rectangle {
         id: rectangle
-        color: "white"
+        color: "black"
         y: 1
         width: 2
         height: parent.height - 2
+
         SequentialAnimation on opacity {
             id: curanim
             loops: Animation.Infinite
-            running: window.active // only run animation when active window
+            running: root.parent.activeFocus // only run animation when active textedit
 
             readonly property int time: 500
 

@@ -27,7 +27,7 @@ find_package(Qt6 COMPONENTS Core Gui Quick QuickControls2 REQUIRED)
 include(cmake/deps.cmake)
 
 file(GLOB SRC src/*.cpp src/*.h)
-file(GLOB_RECURSE QML src/qml/*.qml)
+file(GLOB_RECURSE QML src/qml/*.qml src/qml/*.js)
 file(GLOB_RECURSE ASSETS assets/*)
 
 qt_add_executable(SuperTuxScripter ${SRC})

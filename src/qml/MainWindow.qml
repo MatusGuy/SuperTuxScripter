@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Shapes
 
+import Code
 import Squirrel
 import SuperTux
 
@@ -13,7 +14,15 @@ ApplicationWindow {
     height: 600
     title: Application.name
 
-    Material.theme: Material.Dark
+    header: MenuBar {
+        Menu {
+            title: "File"
+
+            MenuItem {
+                text: "Open"
+            }
+        }
+    }
 
     RowLayout {
         anchors.fill: parent
@@ -21,13 +30,14 @@ ApplicationWindow {
         TreeView {
             Layout.fillHeight: true
             implicitWidth: 200
+            alternatingRows: false
 
 
-            model: LevelScriptsModel {
-                id: levelModel
+            model: FileSystemModel {
+                rootPath: "C:\\"
             }
-            delegate: Label {
-                text: model.name
+            delegate: TreeViewDelegate {
+                //text: model.fileName
             }
         }
 
