@@ -38,12 +38,14 @@ void LevelScriptsModel::refreshLevel() {
             auto objitem = newItem(object.get());
             sectoritem->setChild(row, objitem);
 
+            /*
             int srow = 0;
-            for (const std::unique_ptr<ObjectOption>& opt : object->get_settings().get_options()) {
-                if (!dynamic_cast<ScriptObjectOption*>(opt.get())) continue;
+            for (ObjectOption* opt : object->get_settings().get_options()) {
+                if (!dynamic_cast<ScriptObjectOption*>(opt)) continue; //segfault here
                 objitem->setChild(srow, newItem(ScriptType, QString::fromStdString(opt->get_text()), object->get_type()));
                 srow++;
             }
+*/
 
             row++;
         }

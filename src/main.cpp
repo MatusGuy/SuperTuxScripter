@@ -14,6 +14,7 @@
 #define SDL_MAIN_HANDLED
 #include <supertux/main.hpp>
 
+#include "supertuxthread.h"
 #include "squirrelhighlighter.h"
 #include "levelscriptsmodel.h"
 
@@ -26,6 +27,10 @@ void onObjectCreated(QObject *obj, const QUrl &objUrl) {
 int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
     app.setApplicationName("SuperTuxScripter");
+
+    SuperTuxThread t;
+    t.start();
+    t.waitForGame();
 
     QQmlApplicationEngine engine;
 
