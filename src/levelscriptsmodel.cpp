@@ -1,45 +1,87 @@
 #include "levelscriptsmodel.h"
 
-LevelScriptsModel::LevelScriptsModel(QObject *parent):
-    QAbstractItemModel(parent)
-{
+LevelScriptsModel::LevelScriptsModel(QObject *parent): QStandardItemModel(parent) {
 
 }
 
-QVariant LevelScriptsModel::headerData(int section, Qt::Orientation orientation, int role) const {
-    return QVariant();
+void LevelScriptsModel::setLevelFileName(const QString& level) {
+    m_levelFileName = level;
+    emit levelFileNameChanged();
+    refreshLevel();
 }
 
-QModelIndex LevelScriptsModel::index(int row, int column, const QModelIndex &parent) const {
-    QModelIndex index = createIndex(row, column);
-    return index;
+void LevelScriptsModel::refreshLevel() {
+    if (m_levelFileName.isEmpty()) {
+        m_level.reset(); // Die
+        clear();
+        return;
+    }
+
+    m_level = LevelParser::from_file(m_levelFileName.toStdString(), false, true);
+    auto levelitem = newItem(m_level.get());
+    setItem(0, levelitem);
+
+    for (size_t i = 0; i < m_level->get_sector_count(); i++) {
+        Sector* sector = m_level->get_sector(i);
+        auto sectoritem = newItem(sector);
+        levelitem->setChild(i, sectoritem);
+
+        int row = 0;
+        for (TileMap* tilemap : sector->get_all_tilemaps()) {
+            sectoritem->setChild(row, newItem(tilemap));
+            row++;
+        }
+
+        for (const std::unique_ptr<GameObject>& object : sector->get_objects()) {
+            if (object->get_name().empty()) continue;
+
+            auto objitem = newItem(object.get());
+            sectoritem->setChild(row, objitem);
+
+            int srow = 0;
+            for (const std::unique_ptr<ObjectOption>& opt : object->get_settings().get_options()) {
+                if (!dynamic_cast<ScriptObjectOption*>(opt.get())) continue;
+                objitem->setChild(srow, newItem(ScriptType, QString::fromStdString(opt->get_text()), object->get_type()));
+                srow++;
+            }
+
+            row++;
+        }
+    }
 }
 
-QModelIndex LevelScriptsModel::parent(const QModelIndex &index) const {
-    return QModelIndex();
+QStandardItem* LevelScriptsModel::newItem(Level* obj) {
+    auto item = new QStandardItem(qstdstr(obj->get_name()));
+    item->setData(LevelType);
+    return item;
 }
 
-int LevelScriptsModel::rowCount(const QModelIndex &parent) const {
-    //if (!parent.isValid()) return 0;
-    return 5;
+QStandardItem* LevelScriptsModel::newItem(Sector* obj) {
+    auto item = new QStandardItem(qstdstr(obj->get_name()));
+    item->setData(SectorType);
+    return item;
 }
 
-int LevelScriptsModel::columnCount(const QModelIndex &parent) const {
-    //if (!parent.isValid()) return 0;
-    return 1;
+QStandardItem* LevelScriptsModel::newItem(TileMap* obj) {
+    auto item = new QStandardItem(
+        !obj->get_name().empty() ? qstdstr(obj->get_name()) :
+        QString::number(obj->get_layer())
+    );
+    item->setData(TilemapType);
+    return item;
 }
 
-QVariant LevelScriptsModel::data(const QModelIndex &index, int role) const {
-    if (!index.isValid())
-        return QVariant();
-
-    // FIXME: Implement me!
-    return "hello";
+QStandardItem* LevelScriptsModel::newItem(GameObject* obj) {
+    auto item = new QStandardItem(
+        !obj->get_name().empty() ? qstdstr(obj->get_name()) :
+        QString("<unnamed %1>").arg(qstdstr(obj->get_display_name()))
+    );
+    item->setData(GameObjectType);
+    return item;
 }
 
-
-QHash<int, QByteArray> LevelScriptsModel::roleNames() const {
-    QHash<int, QByteArray> names;
-    names[NameRole] = "name";
-    return names;
+QStandardItem* LevelScriptsModel::newItem(ObjectType type, const QString& name, const QVariant& value) {
+    auto item = new QStandardItem(name);
+    item->setData(type);
+    return item;
 }

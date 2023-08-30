@@ -1,37 +1,75 @@
 #ifndef LEVELSCRIPTSMODEL_H
 #define LEVELSCRIPTSMODEL_H
 
-#include <QAbstractItemModel>
+#include <memory>
+
+#include <supertux/level_parser.hpp>
+#include <supertux/level.hpp>
+#include <supertux/sector.hpp>
+#include <supertux/game_object.hpp>
+#include <object/tilemap.hpp>
+
+#include <QFileSystemModel>
+#include <QStandardItemModel>
 #include <QtQml>
 
-class LevelScriptsModel : public QAbstractItemModel {
+#define qstdstr QString::fromStdString
+
+class QuickFileSystemModel : public QFileSystemModel {
     Q_OBJECT
     QML_ELEMENT
+
+    Q_PROPERTY(QString rootPath READ rootPath WRITE setRootPath NOTIFY rootPathChanged)
+
+signals:
+    void rootPathChanged();
+
+};
+
+// I do know QAbstractItemModel is faster but I just
+// can't wrap my head around it!!!
+class LevelScriptsModel : public QStandardItemModel {
+    Q_OBJECT
+    QML_ELEMENT
+
+    Q_PROPERTY(QString levelFileName READ levelFileName WRITE setLevelFileName NOTIFY levelFileNameChanged)
 
 public:
     explicit LevelScriptsModel(QObject *parent = nullptr);
 
-    enum Role {
-        NameRole = Qt::UserRole
+    enum ObjectType : int {
+        LevelType = 0,
+        SectorType = 1,
+        TilemapType = 2,
+        GameObjectType = 3,
+        ScriptType = 4
     };
 
-    // Header:
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+    union GameObjectNode {
+        ObjectType type;
+        QString name;
 
-    // Basic functionality:
-    QModelIndex index(int row, int column,
-                      const QModelIndex &parent = QModelIndex()) const override;
-    QModelIndex parent(const QModelIndex &index) const override;
+        GameObjectNode* parent = nullptr;
+        std::vector<GameObjectNode> children;
+    };
 
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+    inline QString levelFileName() { return m_levelFileName; }
+    void setLevelFileName(const QString& level);
 
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    void refreshLevel();
 
-    QHash<int, QByteArray> roleNames() const override;
+    QStandardItem* newItem(Level* obj);
+    QStandardItem* newItem(Sector* obj);
+    QStandardItem* newItem(TileMap* obj);
+    QStandardItem* newItem(GameObject* obj);
+    QStandardItem* newItem(ObjectType type, const QString& name, const QVariant& value);
+
+signals:
+    void levelFileNameChanged();
 
 private:
-
+    QString m_levelFileName;
+    std::unique_ptr<Level> m_level;
 };
 
 #endif // LEVELSCRIPTSMODEL_H

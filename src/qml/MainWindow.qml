@@ -32,10 +32,15 @@ ApplicationWindow {
             implicitWidth: 200
             alternatingRows: false
 
-
+            /*
             model: FileSystemModel {
                 rootPath: "C:\\"
             }
+            */
+            model: LevelScriptsModel {
+                levelFileName: "E:/SOFTWARE/Programming/C++/Qt/SuperTuxScripter/assets/examples/level1.stl"
+            }
+
             delegate: TreeViewDelegate {
                 //text: model.fileName
             }

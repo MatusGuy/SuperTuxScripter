@@ -6,9 +6,7 @@
 #include <QPalette>
 
 // This is a Qt macro
-#ifdef foreach
 #undef foreach
-#endif
 // In modern days, it's useless, but I don't mind that
 // Sadly, it interferes with tinygettext
 // Farewell.
