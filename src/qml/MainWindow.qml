@@ -33,21 +33,19 @@ ApplicationWindow {
             alternatingRows: false
 
 
-            /*
+
             model: FileSystemModel {
                 rootPath: "/"
             }
-            */
 
 
+/*
             model: LevelScriptsModel {
                 levelFileName: "levels/test/swimming.stl"
             }
+*/
 
-
-            delegate: TreeViewDelegate {
-                //text: model.fileName
-            }
+            delegate: InspectorDelegate {}
         }
 
         TextEdit {

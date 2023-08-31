@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>examples/level1.stl</file>
-    </qresource>
-</RCC>

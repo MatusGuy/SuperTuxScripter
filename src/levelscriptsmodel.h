@@ -3,6 +3,7 @@
 
 #include <memory>
 
+#include <supertux/screen_manager.hpp>
 #include <supertux/level_parser.hpp>
 #include <supertux/level.hpp>
 #include <supertux/sector.hpp>

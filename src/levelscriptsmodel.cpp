@@ -17,6 +17,8 @@ void LevelScriptsModel::refreshLevel() {
         return;
     }
 
+    if (!ScreenManager::current()) return;
+
     m_level = LevelParser::from_file(m_levelFileName.toStdString(), false, true);
     auto levelitem = newItem(m_level.get());
     setItem(0, levelitem);
@@ -55,12 +57,14 @@ void LevelScriptsModel::refreshLevel() {
 QStandardItem* LevelScriptsModel::newItem(Level* obj) {
     auto item = new QStandardItem(qstdstr(obj->get_name()));
     item->setData(LevelType);
+    item->setIcon(QIcon(":/images/globe.svg"));
     return item;
 }
 
 QStandardItem* LevelScriptsModel::newItem(Sector* obj) {
     auto item = new QStandardItem(qstdstr(obj->get_name()));
     item->setData(SectorType);
+    item->setIcon(QIcon(":/images/forest.svg"));
     return item;
 }
 
@@ -70,6 +74,7 @@ QStandardItem* LevelScriptsModel::newItem(TileMap* obj) {
         QString::number(obj->get_layer())
     );
     item->setData(TilemapType);
+    item->setIcon(QIcon(":/images/grid.svg"));
     return item;
 }
 
@@ -79,11 +84,13 @@ QStandardItem* LevelScriptsModel::newItem(GameObject* obj) {
         QString("<unnamed %1>").arg(qstdstr(obj->get_display_name()))
     );
     item->setData(GameObjectType);
+    item->setIcon(QIcon(":/images/object.svg"));
     return item;
 }
 
 QStandardItem* LevelScriptsModel::newItem(ObjectType type, const QString& name, const QVariant& value) {
     auto item = new QStandardItem(name);
     item->setData(type);
+    item->setIcon(QIcon(":/images/code.svg"));
     return item;
 }
