@@ -25,6 +25,8 @@ ApplicationWindow {
         }
     }
 
+    property int currentMode: 0
+
     RowLayout {
         anchors.fill: parent
 
@@ -32,9 +34,14 @@ ApplicationWindow {
 
             component ModeButton : ToolButton {
                 id: modebutton
+
+                required property int index
+                required property var modelData
+
                 icon.source: modelData
                 flat: true
                 checkable: true
+
 
                 width: parent.width
                 height: width
@@ -47,6 +54,10 @@ ApplicationWindow {
                         return buttoncolor
                     }
                 }
+
+                onPressed: {
+                    root.currentMode = index
+                }
             }
 
             color: root.palette.button
@@ -56,6 +67,10 @@ ApplicationWindow {
             ButtonGroup {
                 id: modeGroup
                 exclusive: true
+
+                Component.onCompleted: {
+                    modeGroup.checkedButton = modeGroup.buttons[0]
+                }
             }
 
             Column {
@@ -70,9 +85,22 @@ ApplicationWindow {
         }
 
         StackLayout {
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            currentIndex: currentMode
+
             Editor {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
+            }
+
+            Item {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+
+                BusyIndicator {
+                    anchors.centerIn: parent
+                }
             }
         }
 

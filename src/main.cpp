@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
     SuperTuxThread t;
     t.start();
     t.waitForGame();
-    */
+*/
 
     QQmlApplicationEngine engine;
 
