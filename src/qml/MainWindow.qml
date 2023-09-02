@@ -104,6 +104,7 @@ ApplicationWindow {
                     AnimatedImage {
                         Layout.alignment: Qt.AlignCenter
                         source: "qrc:/images/tuxrun.gif"
+                        playing: visible && root.active
                     }
 
                     Label {

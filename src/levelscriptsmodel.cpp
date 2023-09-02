@@ -57,14 +57,14 @@ void LevelScriptsModel::refreshLevel() {
 QStandardItem* LevelScriptsModel::newItem(Level* obj) {
     auto item = new QStandardItem(qstdstr(obj->get_name()));
     item->setData(LevelType);
-    item->setIcon(QIcon(":/images/globe.svg"));
+    item->setData("qrc:/images/globe.svg", Qt::DecorationRole);
     return item;
 }
 
 QStandardItem* LevelScriptsModel::newItem(Sector* obj) {
     auto item = new QStandardItem(qstdstr(obj->get_name()));
     item->setData(SectorType);
-    item->setIcon(QIcon(":/images/forest.svg"));
+    item->setData("qrc:/images/forest.svg", Qt::DecorationRole);
     return item;
 }
 
@@ -74,7 +74,7 @@ QStandardItem* LevelScriptsModel::newItem(TileMap* obj) {
         QString::number(obj->get_layer())
     );
     item->setData(TilemapType);
-    item->setIcon(QIcon(":/images/grid.svg"));
+    item->setData("qrc:/images/grid.svg", Qt::DecorationRole);
     return item;
 }
 
@@ -84,13 +84,13 @@ QStandardItem* LevelScriptsModel::newItem(GameObject* obj) {
         QString("<unnamed %1>").arg(qstdstr(obj->get_display_name()))
     );
     item->setData(GameObjectType);
-    item->setIcon(QIcon(":/images/object.svg"));
+    item->setData("qrc:/images/object.svg", Qt::DecorationRole);
     return item;
 }
 
 QStandardItem* LevelScriptsModel::newItem(ObjectType type, const QString& name, const QVariant& value) {
     auto item = new QStandardItem(name);
     item->setData(type);
-    item->setIcon(QIcon(":/images/code.svg"));
+    item->setData("qrc:/images/object.svg", Qt::DecorationRole);
     return item;
 }
