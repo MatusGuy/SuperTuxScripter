@@ -8,13 +8,14 @@ import Squirrel
 import SuperTux
 
 ApplicationWindow {
-    id: window
+    id: root
     visible: true
     width: 800
     height: 600
     title: Application.name
 
     header: MenuBar {
+        font.pointSize: 11
         Menu {
             title: "File"
 
@@ -27,41 +28,53 @@ ApplicationWindow {
     RowLayout {
         anchors.fill: parent
 
-        TreeView {
-            Layout.fillHeight: true
-            implicitWidth: 200
-            alternatingRows: false
+        Rectangle {
 
+            component ModeButton : ToolButton {
+                id: modebutton
+                icon.source: modelData
+                flat: true
+                checkable: true
 
-
-            model: FileSystemModel {
-                rootPath: "/"
+                width: parent.width
+                height: width
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: {
+                        const buttoncolor = root.palette.button
+                        if (modebutton.checked) return Qt.darker(buttoncolor, 1.75)
+                        if (modebutton.hovered) return Qt.darker(buttoncolor, 1.25)
+                        return buttoncolor
+                    }
+                }
             }
 
-
-/*
-            model: LevelScriptsModel {
-                levelFileName: "levels/test/swimming.stl"
-            }
-*/
-
-            delegate: InspectorDelegate {}
-        }
-
-        TextEdit {
-            id: codeedit
-
-            Layout.fillWidth:  true
+            color: root.palette.button
             Layout.fillHeight: true
+            width: 50
 
-            cursorDelegate: TextCursor {}
+            ButtonGroup {
+                id: modeGroup
+                exclusive: true
+            }
 
-            font.pointSize: 15
-            font.family: "Consolas"
+            Column {
+                anchors.fill: parent
+                Repeater {
+                    model: ["qrc:/images/text.svg", "qrc:/images/edit.svg"]
+                    ModeButton {
+                        ButtonGroup.group: modeGroup
+                    }
+                }
+            }
         }
-    }
 
-    SquirrelHighlighter {
-        textDocument: codeedit.textDocument
+        StackLayout {
+            Editor {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+            }
+        }
+
     }
 }

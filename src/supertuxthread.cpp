@@ -31,8 +31,25 @@ void SuperTuxThread::waitForGame() {
     }
 }
 
+char** SuperTuxThread::toArgv(size_t sz, ...) {
+    std::va_list args;
+    int i;
+    char **argv = (char**) std::malloc((sz+1) * sizeof(char*));
+    char *temp;
+    va_start(args, sz);
+    for (i = 0; i < sz; i++) {
+        temp = va_arg(args, char*);
+        argv[i] = (char*) malloc(sizeof(temp+1));
+        std::strcpy(argv[i],temp);
+    }
+    argv[i] = NULL;
+    va_end(args);
+    return argv;
+}
+
 void SuperTuxThread::run() {
-    char* argv[] = {"supertux2"};
+    char** argv = toArgv(1, "supertux2");
     m_main->run(1, argv);
+    std::free(argv);
 
 }

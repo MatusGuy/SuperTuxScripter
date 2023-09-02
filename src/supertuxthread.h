@@ -1,6 +1,8 @@
 #ifndef SUPERTUXTHREAD_H
 #define SUPERTUXTHREAD_H
 
+#include <cstdarg>
+
 #include <supertux/main.hpp>
 #include <supertux/screen_manager.hpp>
 
@@ -17,6 +19,8 @@ public:
     void stop();
 
     void waitForGame();
+
+    static char** toArgv(size_t sz, ...);
 
 protected:
     void run();

@@ -28,7 +28,8 @@ int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
     app.setApplicationName("SuperTuxScripter");
 
-    /*
+
+/*
     SuperTuxThread t;
     t.start();
     t.waitForGame();
