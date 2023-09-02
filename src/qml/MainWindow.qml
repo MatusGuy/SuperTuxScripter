@@ -95,11 +95,22 @@ ApplicationWindow {
             }
 
             Item {
-                Layout.fillWidth: true
                 Layout.fillHeight: true
+                Layout.fillWidth: true
 
-                BusyIndicator {
+                ColumnLayout {
                     anchors.centerIn: parent
+
+                    AnimatedImage {
+                        Layout.alignment: Qt.AlignCenter
+                        source: "qrc:/images/tuxrun.gif"
+                    }
+
+                    Label {
+                        Layout.alignment: Qt.AlignCenter
+                        text: "SuperTux is starting up..."
+                        font.pointSize: 11
+                    }
                 }
             }
         }
