@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Controls
 import QtQuick.Layouts
 
 import Code
@@ -35,16 +36,25 @@ Item {
             delegate: InspectorDelegate {}
         }
 
-        TextEdit {
-            id: codeedit
-
+        ScrollView {
+            id: scrollview
             Layout.fillWidth:  true
             Layout.fillHeight: true
 
-            cursorDelegate: TextCursor {}
+            Flickable {
+                flickDeceleration: 10000
 
-            font.pointSize: 15
-            font.family: "Consolas"
+                TextArea {
+                    id: codeedit
+
+                    cursorDelegate: TextCursor {}
+
+                    font.pointSize: 15
+                    font.family: "Consolas"
+                }
+
+                TextArea.flickable: codeedit
+            }
         }
     }
 

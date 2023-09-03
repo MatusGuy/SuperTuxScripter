@@ -14,8 +14,11 @@ ApplicationWindow {
     height: 600
     title: Application.name
 
+    palette.button: Qt.darker(palette.button, 1.25)
+
     header: MenuBar {
         font.pointSize: 11
+        font.bold: true
         Menu {
             title: "File"
 
@@ -42,15 +45,14 @@ ApplicationWindow {
                 flat: true
                 checkable: true
 
-
                 width: parent.width
                 height: width
                 background: Rectangle {
                     anchors.fill: parent
                     color: {
                         const buttoncolor = root.palette.button
-                        if (modebutton.checked) return Qt.darker(buttoncolor, 1.75)
-                        if (modebutton.hovered) return Qt.darker(buttoncolor, 1.25)
+                        if (modebutton.checked) return Qt.lighter(buttoncolor, 1.75)
+                        if (modebutton.hovered) return Qt.lighter(buttoncolor, 1.25)
                         return buttoncolor
                     }
                 }

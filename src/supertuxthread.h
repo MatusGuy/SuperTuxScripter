@@ -4,6 +4,7 @@
 #include <cstdarg>
 
 #include <supertux/main.hpp>
+#include <supertux/screen_fade.hpp>
 #include <supertux/screen_manager.hpp>
 
 #include <QThread>

@@ -15,7 +15,8 @@ void SuperTuxThread::start() {
 
 void SuperTuxThread::stop() {
     Q_ASSERT(m_main);
-    //TODO: Invoke quit event
+    ScreenManager::current()->quit();
+    while (ScreenManager::current()) QThread::msleep(50);
     delete m_main; m_main = nullptr;
 }
 

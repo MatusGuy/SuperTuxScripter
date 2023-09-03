@@ -5,6 +5,16 @@ SquirrelHighlighter::SquirrelHighlighter(QQuickTextDocument* doc):
     m_normal_format(".*", QColor(Qt::black), QFont::Normal)
 {
     std::reverse(std::begin(m_blocks), std::end(m_blocks));
+
+    connect(
+        this, &SquirrelHighlighter::textDocumentChanged,
+        this, [this](){
+            // put that stupid tab size to 4
+            QTextOption opt = document()->defaultTextOption();
+            opt.setTabStopDistance(0);
+            document()->setDefaultTextOption(opt);
+        }
+    );
 }
 
 void SquirrelHighlighter::highlightBlock(const QString& text) {
