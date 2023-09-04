@@ -29,7 +29,7 @@ Item {
 
 
             model: LevelScriptsModel {
-                levelFileName: "levels/test/swimming.stl"
+                levelFileName: "levels/my_world/semisol.stl"
             }
 
 

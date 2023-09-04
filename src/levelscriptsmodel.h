@@ -3,6 +3,8 @@
 
 #include <memory>
 
+#include <editor/editor.hpp>
+#include <supertux/screen_fade.hpp>
 #include <supertux/screen_manager.hpp>
 #include <supertux/level_parser.hpp>
 #include <supertux/level.hpp>
@@ -12,6 +14,7 @@
 
 #include <QFileSystemModel>
 #include <QStandardItemModel>
+#include <QRegularExpression>
 #include <QtQml>
 
 #define qstdstr QString::fromStdString

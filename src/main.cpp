@@ -51,6 +51,13 @@ int main(int argc, char *argv[]) {
                      );
     engine.load(g_url);
 
+    QObject::connect(
+        &app, &QGuiApplication::aboutToQuit,
+        &app, [&t](){
+            t.stop();
+        }
+    );
 
-    return app.exec();
+    int resp = app.exec();
+    return resp;
 }

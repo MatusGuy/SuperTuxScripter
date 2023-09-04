@@ -1,10 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" version="1.1">
- <defs>
-  <style id="current-color-scheme" type="text/css">
-   .ColorScheme-Text { color:#444444; } .ColorScheme-Highlight { color:#4285f4; } .ColorScheme-NeutralText { color:#ff9800; } .ColorScheme-PositiveText { color:#4caf50; } .ColorScheme-NegativeText { color:#f44336; }
-  </style>
- </defs>
- <g transform="translate(3,3)">
-  <path style="fill:currentColor" class="ColorScheme-Text" d="M 3,1 C 1,1 1,3 1,3 V 13 C 1,15 3,15 3,15 H 13 C 15,15 15,13 15,13 V 3 C 15,1 13,1 13,1 Z M 10,2 C 12.209,2 14,3.7909 14,6 14,8.2091 12.209,10 10,10 V 6 H 6 C 6,3.7909 7.7909,2 10,2 Z M 3,7 H 9 V 13 H 3 Z"/>
- </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M11 19.425v-6.85L5 9.1v6.85l6 3.475Zm2 0l6-3.475V9.1l-6 3.475v6.85Zm-1-8.575l5.925-3.425L12 4L6.075 7.425L12 10.85ZM4 17.7q-.475-.275-.738-.725t-.262-1v-7.95q0-.55.263-1T4 6.3l7-4.025Q11.475 2 12 2t1 .275L20 6.3q.475.275.738.725t.262 1v7.95q0 .55-.263 1T20 17.7l-7 4.025Q12.525 22 12 22t-1-.275L4 17.7Zm8-5.7Z"/></svg>

@@ -13,13 +13,16 @@ void LevelScriptsModel::setLevelFileName(const QString& level) {
 void LevelScriptsModel::refreshLevel() {
     if (m_levelFileName.isEmpty()) {
         m_level.reset(); // Die
-        clear();
+        QStandardItemModel::clear();
         return;
     }
 
     if (!ScreenManager::current()) return;
 
-    m_level = LevelParser::from_file(m_levelFileName.toStdString(), false, true);
+    ScreenManager::current()->push_screen(std::make_unique<Editor>());
+    Editor::current()->set_level(m_levelFileName.toStdString());
+    while (!Editor::current()->get_level()) QThread::msleep(50);
+    m_level.reset(Editor::current()->get_level());
     auto levelitem = newItem(m_level.get());
     setItem(0, levelitem);
 
@@ -40,14 +43,15 @@ void LevelScriptsModel::refreshLevel() {
             auto objitem = newItem(object.get());
             sectoritem->setChild(row, objitem);
 
-            /*
             int srow = 0;
-            for (ObjectOption* opt : object->get_settings().get_options()) {
-                if (!dynamic_cast<ScriptObjectOption*>(opt)) continue; //segfault here
+            ObjectSettings settings = object->get_settings();
+
+            for (const std::unique_ptr<ObjectOption>& opt : settings.get_options()) {
+                if (opt->get_flags() & ObjectOptionFlag::OPTION_HIDDEN) continue;
+                if (opt->get_key().find("script") == std::string::npos) continue;
                 objitem->setChild(srow, newItem(ScriptType, QString::fromStdString(opt->get_text()), object->get_type()));
                 srow++;
             }
-*/
 
             row++;
         }
@@ -91,6 +95,6 @@ QStandardItem* LevelScriptsModel::newItem(GameObject* obj) {
 QStandardItem* LevelScriptsModel::newItem(ObjectType type, const QString& name, const QVariant& value) {
     auto item = new QStandardItem(name);
     item->setData(type);
-    item->setData("qrc:/images/object.svg", Qt::DecorationRole);
+    item->setData("qrc:/images/code.svg", Qt::DecorationRole);
     return item;
 }

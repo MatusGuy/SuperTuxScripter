@@ -16,7 +16,7 @@ void SuperTuxThread::start() {
 void SuperTuxThread::stop() {
     Q_ASSERT(m_main);
     ScreenManager::current()->quit();
-    while (ScreenManager::current()) QThread::msleep(50);
+    while (!ScreenManager::current()->get_screen_stack().empty()) QThread::msleep(50);
     delete m_main; m_main = nullptr;
 }
 
@@ -27,7 +27,7 @@ void SuperTuxThread::waitForGame() {
     // I don't care if this goes on infinitely
     while (!ScreenManager::current()) QThread::msleep(50);
 
-    while (ScreenManager::current()->get_screen_stack().size() == 0) {
+    while (ScreenManager::current()->get_screen_stack().empty()) {
         QThread::msleep(50);
     }
 }
