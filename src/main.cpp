@@ -28,10 +28,11 @@ int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
     app.setApplicationName("SuperTuxScripter");
 
-
+/*
     SuperTuxThread t;
     t.start();
     t.waitForGame();
+*/
 
     QQmlApplicationEngine engine;
 
@@ -51,12 +52,14 @@ int main(int argc, char *argv[]) {
                      );
     engine.load(g_url);
 
+    /*
     QObject::connect(
         &app, &QGuiApplication::aboutToQuit,
         &app, [&t](){
             t.stop();
         }
     );
+*/
 
     int resp = app.exec();
     return resp;

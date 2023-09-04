@@ -7,6 +7,8 @@ import Code
 import Squirrel
 import SuperTux
 
+import "theme.js" as Theme
+
 ApplicationWindow {
     id: root
     visible: true
@@ -41,9 +43,9 @@ ApplicationWindow {
                 required property int index
                 required property var modelData
 
-                icon.source: modelData
                 flat: true
                 checkable: true
+                icon.source: Theme.getIcon(modelData, checked)
 
                 width: parent.width
                 height: width
@@ -78,7 +80,7 @@ ApplicationWindow {
             Column {
                 anchors.fill: parent
                 Repeater {
-                    model: ["qrc:/images/text.svg", "qrc:/images/edit.svg"]
+                    model: ["text", "edit"]
                     ModeButton {
                         ButtonGroup.group: modeGroup
                     }

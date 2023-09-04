@@ -20,18 +20,16 @@ Item {
             alternatingRows: false
 
 
-    /*
             model: FileSystemModel {
                 rootPath: "/"
             }
-    */
 
 
-
+/*
             model: LevelScriptsModel {
                 levelFileName: "levels/my_world/semisol.stl"
             }
-
+*/
 
             delegate: InspectorDelegate {}
         }
