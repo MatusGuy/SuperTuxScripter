@@ -8,9 +8,17 @@ TreeViewDelegate {
     contentItem : Row {
         spacing: 5
 
-        Image {
-            id: icon
-            source: model.decoration
+        Component {
+            id: iconComponent
+            Image {
+                id: icon
+                source: model.decoration
+            }
+        }
+
+        Loader {
+            // Only load icon if model has a decoration role
+            sourceComponent: model.decoration === undefined ? null : iconComponent
         }
 
         Label {
