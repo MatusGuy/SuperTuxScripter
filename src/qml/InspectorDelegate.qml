@@ -5,6 +5,8 @@ import QtQuick.Layouts
 TreeViewDelegate {
     id: root
 
+    property string displayRoleName: "display";
+
     contentItem : Row {
         spacing: 5
 
@@ -24,8 +26,7 @@ TreeViewDelegate {
         Label {
             id: label
             height: icon.height
-            clip: false
-            text: model.display
+            text: model[displayRoleName]
             elide: Text.ElideRight
             verticalAlignment: Text.AlignVCenter
             color: highlighted ? palette.highlightedText : palette.buttonText

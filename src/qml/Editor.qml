@@ -9,16 +9,19 @@ import SuperTux
 Item {
     id: root
 
-    RowLayout {
+    SplitView {
         id: row
-
         anchors.fill: parent
+        orientation: Qt.Horizontal
 
         TreeView {
-            Layout.fillHeight: true
-            implicitWidth: 200
+            height: parent.height
+            SplitView.preferredWidth: 200
             alternatingRows: false
-
+            columnWidthProvider: (column) => {
+                if (column > 0) return 0
+                return -1
+            }
 
             model: FileSystemModel {
                 rootPath: "/"
@@ -31,13 +34,15 @@ Item {
             }
 */
 
-            delegate: InspectorDelegate {}
+            delegate: InspectorDelegate {
+                displayRoleName: "fileName"
+            }
         }
 
         ScrollView {
             id: scrollview
-            Layout.fillWidth:  true
-            Layout.fillHeight: true
+            height: parent.height
+            SplitView.fillWidth: true
 
             Flickable {
                 flickDeceleration: 10000
