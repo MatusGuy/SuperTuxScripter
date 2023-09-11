@@ -5,6 +5,11 @@
 #include <QQuickStyle>
 #include <QPalette>
 
+
+#include "squirrelhighlighter.h"
+
+#ifdef USE_SUPERTUX
+
 // This is a Qt macro
 #undef foreach
 // In modern days, it's useless, but I don't mind that
@@ -12,11 +17,9 @@
 // Farewell.
 
 #define SDL_MAIN_HANDLED
-#include <supertux/main.hpp>
-
 #include "supertuxthread.h"
-#include "squirrelhighlighter.h"
 #include "levelscriptsmodel.h"
+#endif
 
 const QUrl g_url(u"qrc:/qml/MainWindow.qml"_qs);
 
@@ -28,11 +31,11 @@ int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
     app.setApplicationName("SuperTuxScripter");
 
-/*
+#ifdef USE_SUPERTUX
     SuperTuxThread t;
     t.start();
     t.waitForGame();
-*/
+#endif
 
     QQmlApplicationEngine engine;
 
@@ -52,14 +55,14 @@ int main(int argc, char *argv[]) {
                      );
     engine.load(g_url);
 
-    /*
+#ifdef USE_SUPERTUX
     QObject::connect(
         &app, &QGuiApplication::aboutToQuit,
         &app, [&t](){
             t.stop();
         }
     );
-*/
+#endif
 
     int resp = app.exec();
     return resp;
