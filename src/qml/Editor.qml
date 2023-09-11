@@ -17,11 +17,16 @@ Item {
         TreeView {
             height: parent.height
             SplitView.preferredWidth: 200
+            clip: true
             alternatingRows: false
+            flickDeceleration: 10000
             columnWidthProvider: (column) => {
-                if (column > 0) return 0
-                return -1
+                if (column > 0) return 0 // hide column
+                return -1 // default size
             }
+
+            ScrollBar.vertical: ScrollBar {}
+            ScrollBar.horizontal: ScrollBar {}
 
             model: FileSystemModel {
                 rootPath: "/"
