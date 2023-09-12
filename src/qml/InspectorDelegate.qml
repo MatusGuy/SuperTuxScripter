@@ -7,6 +7,8 @@ import "theme.js" as Theme
 TreeViewDelegate {
     id: root
 
+    required property int column
+
     property string displayRoleName: "display";
 
     contentItem : Row {
@@ -27,4 +29,8 @@ TreeViewDelegate {
             visible: !editing
         }
     }
+
+    ToolTip.delay: 1500
+    ToolTip.visible: hovered
+    ToolTip.text: model.toolTip
 }
