@@ -12,6 +12,8 @@
 #include <supertux/game_object.hpp>
 #include <object/tilemap.hpp>
 
+#include "supertuxthread.h"
+
 #include <QFileSystemModel>
 #include <QStandardItemModel>
 #include <QRegularExpression>

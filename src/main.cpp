@@ -31,11 +31,7 @@ int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
     app.setApplicationName("SuperTuxScripter");
 
-#ifdef USE_SUPERTUX
-    SuperTuxThread t;
-    t.start();
-    t.waitForGame();
-#endif
+    SuperTuxThread& t = SuperTuxThread::instance();
 
     QQmlApplicationEngine engine;
 
@@ -54,6 +50,10 @@ int main(int argc, char *argv[]) {
                      Qt::QueuedConnection
                      );
     engine.load(g_url);
+
+#ifdef USE_SUPERTUX
+    t.start();
+#endif
 
 #ifdef USE_SUPERTUX
     QObject::connect(

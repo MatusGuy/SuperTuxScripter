@@ -1,13 +1,18 @@
 #include "levelscriptsmodel.h"
 
 LevelScriptsModel::LevelScriptsModel(QObject *parent): QStandardItemModel(parent) {
-
+    connect(
+        &SuperTuxThread::instance(), &SuperTuxThread::started,
+        this, &LevelScriptsModel::refreshLevel
+    );
 }
 
 void LevelScriptsModel::setLevelFileName(const QString& level) {
     m_levelFileName = level;
     emit levelFileNameChanged();
-    refreshLevel();
+
+    if (SuperTuxThread::instance().isRunning())
+        refreshLevel();
 }
 
 void LevelScriptsModel::refreshLevel() {

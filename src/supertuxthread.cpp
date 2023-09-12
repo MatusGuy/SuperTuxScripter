@@ -1,20 +1,12 @@
 #include "supertuxthread.h"
 
-SuperTuxThread::SuperTuxThread(QObject *parent): QThread{parent} {
-    setPriority(Priority::NormalPriority);
-}
-
-SuperTuxThread::~SuperTuxThread() {
-    if (m_main) stop();
-}
-
 void SuperTuxThread::start() {
     m_main = new Main;
     QThread::start();
 }
 
 void SuperTuxThread::stop() {
-    Q_ASSERT(m_main);
+    if (!m_main) return;
     ScreenManager::current()->quit();
     while (!ScreenManager::current()->get_screen_stack().empty()) QThread::msleep(50);
     delete m_main; m_main = nullptr;
@@ -40,7 +32,7 @@ char** SuperTuxThread::toArgv(size_t sz, ...) {
     va_start(args, sz);
     for (i = 0; i < sz; i++) {
         temp = va_arg(args, char*);
-        argv[i] = (char*) malloc(sizeof(temp+1));
+        argv[i] = (char*) std::malloc(sizeof(temp+1));
         std::strcpy(argv[i],temp);
     }
     argv[i] = NULL;
