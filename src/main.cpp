@@ -52,10 +52,6 @@ int main(int argc, char *argv[]) {
                      );
     engine.load(g_url);
 
-#ifdef USE_SUPERTUX
-    t.startSuperTux();
-#endif
-
     int resp = app.exec();
     return resp;
 }

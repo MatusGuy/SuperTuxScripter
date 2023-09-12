@@ -20,6 +20,7 @@ class SuperTuxThread : public QThread, public Singleton<SuperTuxThread> {
 public:
     Q_INVOKABLE void startSuperTux();
     Q_INVOKABLE void quitSuperTux();
+    Q_INVOKABLE bool isRunning() { return QThread::isRunning(); }
 
     void waitForGame();
 

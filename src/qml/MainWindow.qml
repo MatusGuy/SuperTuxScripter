@@ -17,6 +17,8 @@ ApplicationWindow {
     title: Application.name
 
     onClosing: (close) => {
+        if (!SuperTuxThread.isRunning()) return;
+
         close.accepted = false;
         SuperTuxThread.quitSuperTux();
         close.accepted = true;
@@ -134,25 +136,7 @@ ApplicationWindow {
                 Layout.fillHeight: true
             }
 
-            Item {
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-
-                ColumnLayout {
-                    anchors.centerIn: parent
-
-                    AnimatedImage {
-                        Layout.alignment: Qt.AlignCenter
-                        source: "qrc:/images/tuxrun.gif"
-                        playing: visible && root.active
-                    }
-
-                    Label {
-                        Layout.alignment: Qt.AlignCenter
-                        text: "SuperTux is starting up..."
-                        font.pointSize: 11
-                    }
-                }
+            SuperTuxViewport {
             }
         }
 
