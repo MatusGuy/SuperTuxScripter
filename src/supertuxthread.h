@@ -11,11 +11,15 @@
 
 #include <QThread>
 #include <QEventLoop>
+#include <QtQml>
 
 class SuperTuxThread : public QThread, public Singleton<SuperTuxThread> {
+    Q_OBJECT
+    QML_SINGLETON
+
 public:
-    void start();
-    void stop();
+    Q_INVOKABLE void startSuperTux();
+    Q_INVOKABLE void quitSuperTux();
 
     void waitForGame();
 

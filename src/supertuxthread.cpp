@@ -1,11 +1,11 @@
 #include "supertuxthread.h"
 
-void SuperTuxThread::start() {
+void SuperTuxThread::startSuperTux() {
     m_main = new Main;
     QThread::start();
 }
 
-void SuperTuxThread::stop() {
+void SuperTuxThread::quitSuperTux() {
     if (!m_main) return;
     ScreenManager::current()->quit();
     while (!ScreenManager::current()->get_screen_stack().empty()) QThread::msleep(50);

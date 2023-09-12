@@ -16,6 +16,12 @@ ApplicationWindow {
     height: 600
     title: Application.name
 
+    onClosing: (close) => {
+        close.accepted = false;
+        SuperTuxThread.quitSuperTux();
+        close.accepted = true;
+    }
+
     palette.button: Qt.darker(palette.button, 1.25)
 
     function _stripUrl(url) {

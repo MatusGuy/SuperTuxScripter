@@ -41,6 +41,7 @@ int main(int argc, char *argv[]) {
     qmlRegisterType<SquirrelHighlighter>("Squirrel", 1, 0, "SquirrelHighlighter");
 
     qmlRegisterType<LevelScriptsModel>("SuperTux", 1, 0, "LevelScriptsModel");
+    qmlRegisterSingletonInstance("SuperTux", 1, 0, "SuperTuxThread", &t);
 
     QQuickStyle::setStyle("Basic");
     QQuickWindow::setTextRenderType(QQuickWindow::NativeTextRendering);
@@ -52,16 +53,7 @@ int main(int argc, char *argv[]) {
     engine.load(g_url);
 
 #ifdef USE_SUPERTUX
-    t.start();
-#endif
-
-#ifdef USE_SUPERTUX
-    QObject::connect(
-        &app, &QGuiApplication::aboutToQuit,
-        &app, [&t](){
-            t.stop();
-        }
-    );
+    t.startSuperTux();
 #endif
 
     int resp = app.exec();
