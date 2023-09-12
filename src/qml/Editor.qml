@@ -9,12 +9,26 @@ import SuperTux
 Item {
     id: root
 
+    FileSystemModel {
+        id: filesystemmodel
+        rootPath: "/"
+    }
+
+    LevelScriptsModel {
+        id: levelmodel
+        levelFileName: "levels/my_world/semisol.stl"
+    }
+
+    property alias _model: inspector.model
+    _model: filesystemmodel
+
     SplitView {
         id: row
         anchors.fill: parent
         orientation: Qt.Horizontal
 
         TreeView {
+            id: inspector
             height: parent.height
             SplitView.preferredWidth: 200
             clip: true
@@ -28,19 +42,8 @@ Item {
             ScrollBar.vertical: ScrollBar {}
             ScrollBar.horizontal: ScrollBar {}
 
-            model: FileSystemModel {
-                rootPath: "/"
-            }
-
-
-/*
-            model: LevelScriptsModel {
-                levelFileName: "levels/my_world/semisol.stl"
-            }
-*/
-
             delegate: InspectorDelegate {
-                displayRoleName: "fileName"
+                //displayRoleName: model === filesystemmodel ? "fileName"
             }
         }
 
@@ -64,6 +67,18 @@ Item {
                 TextArea.flickable: codeedit
             }
         }
+    }
+
+    function openFolder(url) {
+        //FIXME
+        //filesystemmodel.rootPath = url
+        _model = filesystemmodel
+    }
+
+    function openLevel(level) {
+        //FIXME
+        //levelmodel.levelFileName = level
+        _model = levelmodel
     }
 
     SquirrelHighlighter {

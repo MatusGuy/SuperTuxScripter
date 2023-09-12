@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import QtQuick.Shapes
+import QtQuick.Dialogs
 
 import Code
 import Squirrel
@@ -18,6 +18,29 @@ ApplicationWindow {
 
     palette.button: Qt.darker(palette.button, 1.25)
 
+    function _stripUrl(url) {
+        return decodeURIComponent(url.toString().replace(/^(\w+:\/{3})/,""))
+    }
+
+    //FIXME
+    // turn url relative to base
+    function _rebasedUrl(base, url) {
+        // quite cursed
+        return (new URL(url.toString(), base)).toString()
+    }
+
+    FolderDialog {
+        id: filedialog
+        currentFolder: "/"
+        onAccepted: editor.openFolder(_stripUrl(currentFolder))
+    }
+
+    FileDialog {
+        id: leveldialog
+        currentFolder: "/"
+        onAccepted: editor.openLevel(_stripUrl(_rebasedUrl(".", currentFolder)))
+    }
+
     header: MenuBar {
         font.pointSize: 11
         font.bold: true
@@ -25,7 +48,13 @@ ApplicationWindow {
             title: "File"
 
             MenuItem {
-                text: "Open"
+                text: "Open folder..."
+                onTriggered: filedialog.open()
+            }
+
+            MenuItem {
+                text: "Open level..."
+                onTriggered: leveldialog.open()
             }
         }
     }
@@ -94,6 +123,7 @@ ApplicationWindow {
             currentIndex: currentMode
 
             Editor {
+                id: editor
                 Layout.fillWidth: true
                 Layout.fillHeight: true
             }

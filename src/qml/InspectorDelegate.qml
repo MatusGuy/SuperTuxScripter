@@ -2,6 +2,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
+import "theme.js" as Theme
+
 TreeViewDelegate {
     id: root
 
@@ -10,17 +12,9 @@ TreeViewDelegate {
     contentItem : Row {
         spacing: 5
 
-        Component {
-            id: iconComponent
-            Image {
-                id: icon
-                source: model.decoration
-            }
-        }
-
-        Loader {
-            // Only load icon if model has a decoration role
-            sourceComponent: model.decoration === undefined ? null : iconComponent
+        Image {
+            id: icon
+            source: Theme.getIcon(model.decoration)
         }
 
         Label {
