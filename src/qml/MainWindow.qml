@@ -136,8 +136,7 @@ ApplicationWindow {
                 Layout.fillHeight: true
             }
 
-            SuperTuxViewport {
-            }
+            SuperTuxCenter {}
         }
 
     }
