@@ -6,12 +6,14 @@ import "theme.js" as Theme
 
 TreeViewDelegate {
     id: root
+    implicitHeight: 30
 
     required property int column
 
     property string displayRoleName: "display";
 
-    contentItem : Row {
+    contentItem: Row {
+        id: row
         spacing: 5
 
         Image {
@@ -33,4 +35,9 @@ TreeViewDelegate {
     ToolTip.delay: 1500
     ToolTip.visible: hovered
     ToolTip.text: model.toolTip
+
+    background: Rectangle {
+        anchors.fill: parent
+        color: highlighted ? palette.highlight : "transparent"
+    }
 }

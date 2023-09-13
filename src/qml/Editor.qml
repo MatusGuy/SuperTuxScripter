@@ -34,9 +34,14 @@ Item {
             clip: true
             alternatingRows: false
             flickDeceleration: 10000
+            selectionBehavior: TreeView.SelectRows
             columnWidthProvider: (column) => {
                 if (column > 0) return 0 // hide column
                 return -1 // default size
+            }
+
+            selectionModel: ItemSelectionModel {
+                model: inspector.model
             }
 
             ScrollBar.vertical: ScrollBar {}
