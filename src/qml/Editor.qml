@@ -23,16 +23,17 @@ StackLayout {
     }
 
     function open(itemurl) {
-        let filetype = itemurl.toString().replace(/^\w*\.(?=\w)/, "");
-        root.currentIndex = fileTypeId(filetype);
+        let filetype = itemurl.toString().replace(/^.*\.(?=\w)/, "");
         root.currentFile = itemurl
+        root.currentIndex = fileTypeId(filetype);
     }
 
     Item { id: empty }
 
     ScrollView {
         id: scrollview
-        anchors.fill: parent
+        Layout.fillHeight: true
+        Layout.fillWidth: true
 
         Flickable {
             flickDeceleration: 10000
@@ -56,7 +57,8 @@ StackLayout {
 
     SplitView {
         id: spriteviewer
-        anchors.fill: parent
+        Layout.fillHeight: true
+        Layout.fillWidth: true
         orientation: Qt.Vertical
 
         Item {
@@ -64,18 +66,21 @@ StackLayout {
         }
 
         GridView {
+            width: parent.width
             SplitView.preferredHeight: 100
-            model: ListModel {
-                id: fruitModel
+            model: SpriteModel {
+                spriteFile: currentFile
+            }
+            delegate: Column {
+                anchors.fill: parent
 
-                ListElement {
-                    name: "run"
+                Image {
+                    source: model.decoration
+                    anchors.horizontalCenter: parent.horizontalCenter
                 }
-                ListElement {
-                    name: "jump"
-                }
-                ListElement {
-                    name: "crouch"
+                Text {
+                    text: model.display
+                    anchors.horizontalCenter: parent.horizontalCenter
                 }
             }
         }

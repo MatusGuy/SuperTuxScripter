@@ -19,6 +19,7 @@
 #define SDL_MAIN_HANDLED
 #include "supertuxthread.h"
 #include "supertuxviewport.h"
+#include "spritemodel.h"
 #include "levelscriptsmodel.h"
 #endif
 
@@ -43,6 +44,7 @@ int main(int argc, char *argv[]) {
 
     qmlRegisterType<LevelScriptsModel>("SuperTux", 1, 0, "LevelScriptsModel");
     qmlRegisterType<Squircle>("SuperTux", 1, 0, "SuperTuxViewport");
+    qmlRegisterType<SpriteModel>("SuperTux", 1, 0, "SpriteModel");
     qmlRegisterSingletonInstance("SuperTux", 1, 0, "SuperTuxThread", &t);
 
     QQuickStyle::setStyle("Basic");

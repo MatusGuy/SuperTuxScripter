@@ -21,9 +21,10 @@ Item {
             Layout.alignment: Qt.AlignCenter
 
             AnimatedImage {
+                id: img
                 Layout.alignment: Qt.AlignCenter
                 source: "qrc:/images/tuxrun.gif"
-                playing: visible && root.active
+                playing: img.visible && root.active
             }
 
             StackLayout {

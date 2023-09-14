@@ -11,7 +11,7 @@ Item {
 
     FileSystemModel {
         id: filesystemmodel
-        rootPath: "/mnt/data/Programming/"
+        rootPath: "/mnt/data/Games/SuperTux/"
     }
 
     LevelScriptsModel {
@@ -51,7 +51,7 @@ Item {
                 id: insdel
                 //displayRoleName: model === filesystemmodel ? "fileName"
                 onDoubleClicked: {
-                    editor.open(insdel.model[insdel.displayRoleName])
+                    editor.open("file://"+insdel.model.toolTip)
                 }
             }
         }

@@ -1,6 +1,7 @@
 [submodule "external/supertux"]
 	path = external/supertux2_lib
-	url = https://github.com/SuperTux/supertux
+	url = https://github.com/MatusGuy/supertux
+	branch = supertuxscripter
 [submodule "external/squirrel"]
 	path = external/squirrel
 	url = https://github.com/albertodemichelis/squirrel
