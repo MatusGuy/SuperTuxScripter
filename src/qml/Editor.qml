@@ -6,87 +6,78 @@ import Code
 import Squirrel
 import SuperTux
 
-Item {
+StackLayout {
     id: root
+    currentIndex: 0
 
-    FileSystemModel {
-        id: filesystemmodel
-        rootPath: "/"
+    property url currentFile: ""
+
+    // TODO: Implement QML Loader instead!
+    function fileTypeId(type) {
+        if (type === "") return 0;
+        switch (type) {
+            case "nut": return 1;
+            case "sprite": return 2;
+            default: return 1;
+        }
     }
 
-    LevelScriptsModel {
-        id: levelmodel
-        levelFileName: "levels/my_world/semisol.stl"
+    function open(itemurl) {
+        let filetype = itemurl.toString().replace(/^\w*\.(?=\w)/, "");
+        root.currentIndex = fileTypeId(filetype);
+        root.currentFile = itemurl
     }
 
-    property alias _model: inspector.model
-    _model: filesystemmodel
+    Item { id: empty }
+
+    ScrollView {
+        id: scrollview
+        anchors.fill: parent
+
+        Flickable {
+            flickDeceleration: 10000
+
+            TextArea {
+                id: codeedit
+
+                cursorDelegate: TextCursor {}
+
+                font.pointSize: 15
+                font.family: "Consolas"
+            }
+
+            TextArea.flickable: codeedit
+        }
+
+        SquirrelHighlighter {
+            textDocument: codeedit.textDocument
+        }
+    }
 
     SplitView {
-        id: row
+        id: spriteviewer
         anchors.fill: parent
-        orientation: Qt.Horizontal
+        orientation: Qt.Vertical
 
-        TreeView {
-            id: inspector
-            height: parent.height
-            SplitView.preferredWidth: 200
-            clip: true
-            alternatingRows: false
-            flickDeceleration: 10000
-            selectionBehavior: TreeView.SelectRows
-            columnWidthProvider: (column) => {
-                if (column > 0) return 0 // hide column
-                return -1 // default size
-            }
-
-            selectionModel: ItemSelectionModel {
-                model: inspector.model
-            }
-
-            ScrollBar.vertical: ScrollBar {}
-            ScrollBar.horizontal: ScrollBar {}
-
-            delegate: InspectorDelegate {
-                //displayRoleName: model === filesystemmodel ? "fileName"
-            }
+        Item {
+            SplitView.fillHeight: true
         }
 
-        ScrollView {
-            id: scrollview
-            height: parent.height
-            SplitView.fillWidth: true
+        GridView {
+            SplitView.preferredHeight: 100
+            model: ListModel {
+                id: fruitModel
 
-            Flickable {
-                flickDeceleration: 10000
-
-                TextArea {
-                    id: codeedit
-
-                    cursorDelegate: TextCursor {}
-
-                    font.pointSize: 15
-                    font.family: "Consolas"
+                ListElement {
+                    name: "run"
                 }
-
-                TextArea.flickable: codeedit
+                ListElement {
+                    name: "jump"
+                }
+                ListElement {
+                    name: "crouch"
+                }
             }
         }
-    }
-
-    function openFolder(url) {
-        //FIXME
-        //filesystemmodel.rootPath = url
-        _model = filesystemmodel
-    }
-
-    function openLevel(level) {
-        //FIXME
-        //levelmodel.levelFileName = level
-        _model = levelmodel
-    }
-
-    SquirrelHighlighter {
-        textDocument: codeedit.textDocument
     }
 }

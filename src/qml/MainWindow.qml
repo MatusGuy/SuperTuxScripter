@@ -130,8 +130,8 @@ ApplicationWindow {
             Layout.fillWidth: true
             currentIndex: currentMode
 
-            Editor {
-                id: editor
+            Workspace {
+                id: workspace
                 Layout.fillWidth: true
                 Layout.fillHeight: true
             }
