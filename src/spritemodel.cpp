@@ -18,7 +18,7 @@ void SpriteModel::setSpriteFile(QUrl url) {
     }
 
     //TODO: system agnostic datadir
-    QDir datadir("/mnt/data/Games/SuperTux/data/");
+    QDir datadir("/mnt/data/Programming/C++/Qt/SuperTuxScripter/external/supertux2_lib/data/");
     auto doc = ReaderDocument::from_file(datadir.relativeFilePath(path).toStdString());
     ReaderMapping read(doc, doc.get_sexp());
     m_sprite = new SpriteData(read);
@@ -54,7 +54,7 @@ QVariant SpriteModel::data(const QModelIndex &index, int role) const {
         case Qt::DisplayRole: return QString::fromStdString(action->name);
         case Qt::DecorationRole: {
             SurfacePtr surface = action->surfaces[0];
-            return QUrl(QString::fromStdString(surface->get_filename()));
+            return QUrl(QString("file:///mnt/data/Programming/C++/Qt/SuperTuxScripter/external/supertux2_lib/data/").append(surface->get_filename()));
         }
     }
 

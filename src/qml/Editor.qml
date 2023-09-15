@@ -72,8 +72,6 @@ StackLayout {
                 spriteFile: currentFile
             }
             delegate: Column {
-                anchors.fill: parent
-
                 Image {
                     source: model.decoration
                     anchors.horizontalCenter: parent.horizontalCenter

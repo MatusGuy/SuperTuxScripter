@@ -47,13 +47,9 @@ public:
 #endif
             if (filepath.isDir()) return "folder";
 
-            QString suffix = filepath.suffix();
-            const auto& it = iconmap.find(suffix);
+            QString iconname = iconmap.value(filepath.suffix(), "");
 
-            // Ok Qt... Whatever you say.
-            while (it != iconmap.end() && it.key() == suffix) return it.value();
-
-            return "file";
+            return iconname.isEmpty() ? "file" : iconname;
         }
 
         default:
