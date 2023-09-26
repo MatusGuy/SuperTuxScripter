@@ -21,12 +21,6 @@ class SpriteModel : public QAbstractListModel {
                NOTIFY spriteFileChanged)
 
 public:
-    enum ActionRoles {
-        FramesRole = Qt::UserRole,
-        BidirectionalRole = Qt::UserRole + 1,
-        FpsRole = Qt::UserRole + 2
-    };
-
     explicit SpriteModel(QObject* parent = nullptr);
 
     inline QUrl spriteFile() { return m_spriteFile; }
