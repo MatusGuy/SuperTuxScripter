@@ -11,6 +11,14 @@ void SpriteModel::setSpriteFile(QUrl url) {
     if (path.isEmpty()) {
         m_spriteFile = "";
         if (m_sprite) {
+            /*
+            for (auto const& [key, action] : m_sprite->get_actions()) {
+                for (SurfacePtr surface : action->surfaces) {
+                    delete surface->get_texture();
+                }
+            }
+            */
+            //m_sprite.reset();
             delete m_sprite;
             m_sprite = nullptr;
         }
@@ -18,10 +26,8 @@ void SpriteModel::setSpriteFile(QUrl url) {
     }
 
     //TODO: system agnostic datadir
-    QDir datadir("/mnt/data/Programming/C++/Qt/SuperTuxScripter/external/supertux2_lib/data/");
-    auto doc = ReaderDocument::from_file(datadir.relativeFilePath(path).toStdString());
-    ReaderMapping read(doc, doc.get_sexp());
-    m_sprite = new SpriteData(read);
+    QDir datadir("/mnt/data/Games/SuperTux/data");
+    m_sprite = SpriteManager::current()->load(datadir.relativeFilePath(path).toStdString());
 
     endResetModel();
 }
@@ -54,7 +60,7 @@ QVariant SpriteModel::data(const QModelIndex &index, int role) const {
         case Qt::DisplayRole: return QString::fromStdString(action->name);
         case Qt::DecorationRole: {
             SurfacePtr surface = action->surfaces[0];
-            return QUrl(QString("file:///mnt/data/Programming/C++/Qt/SuperTuxScripter/external/supertux2_lib/data/").append(surface->get_filename()));
+            return QUrl(QString("file:///mnt/data/Games/SuperTux/data/").append(surface->get_filename()));
         }
     }
 

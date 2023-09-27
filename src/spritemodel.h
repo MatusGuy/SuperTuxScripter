@@ -2,10 +2,13 @@
 #define SPRITEMODEL_H
 
 #include <sprite/sprite.hpp>
+#include <sprite/sprite_ptr.hpp>
+#include <sprite/sprite_manager.hpp>
 #include <util/reader_document.hpp>
 #include <util/reader_mapping.hpp>
 #include <video/surface.hpp>
 #include <video/surface_ptr.hpp>
+#include <video/texture_manager.hpp>
 
 #include <QAbstractListModel>
 #include <QDir>
