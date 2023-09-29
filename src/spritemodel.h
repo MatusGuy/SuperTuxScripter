@@ -29,6 +29,10 @@ public:
     inline QUrl spriteFile() { return m_spriteFile; }
     void setSpriteFile(QUrl url);
 
+    enum ActionRole {
+        FramesRole = Qt::UserRole
+    };
+
     // Basic functionality:
     QModelIndex index(int row, int column,
                       const QModelIndex &parent = QModelIndex()) const override;
@@ -50,6 +54,9 @@ public:
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
     QHash<int, QByteArray> roleNames() const override;
+
+    /** supertux path to absolute path */
+    static inline QUrl stAbsPath(const std::string& path);
 
 signals:
     void spriteFileChanged();

@@ -63,6 +63,12 @@ StackLayout {
 
         Item {
             SplitView.fillHeight: true
+
+            SequenceImage {
+                id: sprite
+                frames: []
+                running: false
+            }
         }
 
         GridView {
@@ -71,14 +77,21 @@ StackLayout {
             model: SpriteModel {
                 spriteFile: currentFile
             }
-            delegate: Column {
-                Image {
-                    source: model.decoration
-                    anchors.horizontalCenter: parent.horizontalCenter
+            delegate: Button {
+                contentItem: Column {
+                    Image {
+                        source: model.decoration
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    Text {
+                        text: model.display
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
                 }
-                Text {
-                    text: model.display
-                    anchors.horizontalCenter: parent.horizontalCenter
+
+                onDoubleClicked: {
+                    sprite.frames = model.frames
+                    sprite.running = true
                 }
             }
         }

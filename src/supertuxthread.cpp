@@ -41,8 +41,9 @@ char** SuperTuxThread::toArgv(size_t sz, ...) {
 }
 
 void SuperTuxThread::run() {
-    char** argv = toArgv(1, "supertux2");
+    //char** argv = toArgv(1, "supertux2");
+    char *argv[]={"supertux2"};
     m_main->run(1, argv);
-    std::free(argv);
+    //std::free(argv);
 
 }

@@ -57,11 +57,24 @@ QVariant SpriteModel::data(const QModelIndex &index, int role) const {
     SpriteData::Action* action = it->second.get();
 
     switch (role) {
-        case Qt::DisplayRole: return QString::fromStdString(action->name);
-        case Qt::DecorationRole: {
-            SurfacePtr surface = action->surfaces[0];
-            return QUrl(QString("file:///mnt/data/Games/SuperTux/data/").append(surface->get_filename()));
+    case Qt::DisplayRole: return QString::fromStdString(action->name);
+
+    case Qt::DecorationRole: {
+        SurfacePtr surface = action->surfaces[0];
+        return stAbsPath(surface->get_filename());
+    }
+
+    case FramesRole: {
+        QVariantList resp;
+
+        for (SurfacePtr surface : action->surfaces) {
+            resp.append(stAbsPath(surface->get_filename()));
         }
+
+        return resp;
+    }
+
+    default: break;
     }
 
     return QVariant();
@@ -99,8 +112,16 @@ bool SpriteModel::removeRows(int row, int count, const QModelIndex &parent) {
 
 QHash<int, QByteArray> SpriteModel::roleNames() const {
     auto map = QAbstractListModel::roleNames();
+
     map[Qt::DisplayRole] = "display";
     map[Qt::DecorationRole] = "decoration";
     map[Qt::EditRole] = "edit";
+
+    map[FramesRole] = "frames";
+
     return map;
+}
+
+QUrl SpriteModel::stAbsPath(const std::string &path) {
+    return QUrl(QString("file:///mnt/data/Games/SuperTux/data/").append(path));
 }

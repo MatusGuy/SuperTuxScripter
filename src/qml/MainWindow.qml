@@ -65,14 +65,51 @@ ApplicationWindow {
                 onTriggered: leveldialog.open()
             }
         }
+
+        Menu {
+            title: "SuperTux"
+
+            MenuItem {
+                text: "Start SuperTux"
+                onTriggered: SuperTuxThread.startSuperTux()
+            }
+
+            MenuItem {
+                text: "Quit SuperTux"
+                onTriggered: SuperTuxThread.quitSuperTux();
+            }
+        }
     }
+
+    /*
+    Rectangle {
+        color: palette.button
+
+
+        RowLayout {
+            anchors.fill: parent
+
+
+
+            Item { Layout.fillWidth: true }
+
+            Button {
+                text: "run"
+            }
+        }
+
+        XRay {}
+    }
+    */
 
     property int currentMode: 0
 
     RowLayout {
         anchors.fill: parent
 
+        /*
         Rectangle {
+            id: sidebar
 
             component ModeButton : ToolButton {
                 id: modebutton
@@ -124,6 +161,7 @@ ApplicationWindow {
                 }
             }
         }
+        */
 
         StackLayout {
             Layout.fillHeight: true
