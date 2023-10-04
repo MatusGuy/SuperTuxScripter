@@ -30,7 +30,8 @@ public:
     void setSpriteFile(QUrl url);
 
     enum ActionRole {
-        FramesRole = Qt::UserRole
+        FramesRole = Qt::UserRole,
+        FpsRole = Qt::UserRole + 1
     };
 
     // Basic functionality:

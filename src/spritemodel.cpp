@@ -74,6 +74,8 @@ QVariant SpriteModel::data(const QModelIndex &index, int role) const {
         return resp;
     }
 
+    case FpsRole: return action->fps;
+
     default: break;
     }
 
@@ -118,6 +120,7 @@ QHash<int, QByteArray> SpriteModel::roleNames() const {
     map[Qt::EditRole] = "edit";
 
     map[FramesRole] = "frames";
+    map[FpsRole] = "fps";
 
     return map;
 }

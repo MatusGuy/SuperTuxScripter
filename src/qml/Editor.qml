@@ -91,6 +91,7 @@ StackLayout {
 
                 onDoubleClicked: {
                     sprite.frames = model.frames
+                    sprite.fps = model.fps
                     sprite.running = true
                 }
             }

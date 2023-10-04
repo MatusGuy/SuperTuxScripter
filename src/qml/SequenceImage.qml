@@ -4,11 +4,12 @@ import QtQuick.Layouts
 StackLayout {
     id: root
 
+    property alias running: timer.running
     property alias frameCount: root.count
     property alias currentFrame: root.currentIndex
     currentFrame: 0
 
-    property bool running: false
+    property real fps: 12
 
     required property list<url> frames
 
@@ -23,15 +24,17 @@ StackLayout {
 
     Timer {
         id: timer
-        interval: 100
-        running: root.running
+        interval: fps * 10
+        running: false
         repeat: true
         onTriggered: incrementFrame()
+        onIntervalChanged: {
+            console.log("interval: ", interval)
+        }
     }
 
     function incrementFrame() {
         let nextFrame = currentFrame + 1
         currentFrame = nextFrame === frames.length ? 0 : nextFrame
-        console.log("change frame: ", currentFrame)
     }
 }
