@@ -13,6 +13,7 @@
 #include <object/tilemap.hpp>
 
 #include "supertuxthread.h"
+#include "projectmodel.h"
 
 #include <QFileSystemModel>
 #include <QStandardItemModel>
@@ -21,7 +22,7 @@
 
 #define qstdstr QString::fromStdString
 
-class QuickFileSystemModel : public QFileSystemModel {
+class QuickFileSystemModel : public QFileSystemModel, public IProjectModel {
     Q_OBJECT
     QML_ELEMENT
 
@@ -33,6 +34,11 @@ private:
     };
 
 public:
+    explicit QuickFileSystemModel(QObject* parent = nullptr):
+        QFileSystemModel(parent),
+        IProjectModel(this)
+    {}
+
     QVariant data(const QModelIndex &index, int role) const override {
         switch (role) {
 
@@ -70,7 +76,7 @@ signals:
 
 // I do know QAbstractItemModel is faster but I just
 // can't wrap my head around it!!!
-class LevelScriptsModel : public QStandardItemModel {
+class LevelScriptsModel : public QStandardItemModel, public IProjectModel {
     Q_OBJECT
     QML_ELEMENT
 
@@ -105,6 +111,8 @@ public:
     QStandardItem* newItem(TileMap* obj);
     QStandardItem* newItem(GameObject* obj);
     QStandardItem* newItem(ObjectType type, const QString& name, const QVariant& value);
+
+    virtual QHash<int, QByteArray> roleNames() const override;
 
 signals:
     void levelFileNameChanged();

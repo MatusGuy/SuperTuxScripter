@@ -5,7 +5,7 @@
 #include <QQuickStyle>
 #include <QPalette>
 
-
+#include "projectsmodel.h"
 #include "squirrelhighlighter.h"
 
 #ifdef USE_SUPERTUX
@@ -39,6 +39,15 @@ int main(int argc, char *argv[]) {
 
     qmlRegisterType<QuickFileSystemModel>("Code", 1, 0, "FileSystemModel");
     qmlRegisterType<QuickSyntaxHighlighter>("Code", 1, 0, "SyntaxHighlighter");
+
+    qmlRegisterType<ProjectsModel>("Projects", 1, 0, "ProjectsModel");
+    qmlRegisterUncreatableMetaObject(
+        Project::staticMetaObject,
+        "Projects",
+        1, 0,
+        "Project",
+        "Error: Huh???"
+    );
 
     qmlRegisterType<SquirrelHighlighter>("Squirrel", 1, 0, "SquirrelHighlighter");
 

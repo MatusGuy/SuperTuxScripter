@@ -5,10 +5,16 @@ SpriteModel::SpriteModel(QObject* parent): QAbstractListModel(parent) {
 }
 
 void SpriteModel::setSpriteFile(QUrl url) {
-    beginResetModel();
-    QString path = url.toLocalFile();
+    m_spriteFile = url;
 
-    if (path.isEmpty()) {
+    // TODO: control loading manually
+    loadSprite();
+}
+
+void SpriteModel::loadSprite() {
+    beginResetModel();
+
+    if (m_spriteFile.isEmpty()) {
         m_spriteFile = "";
         if (m_sprite) {
             /*
@@ -27,7 +33,7 @@ void SpriteModel::setSpriteFile(QUrl url) {
 
     //TODO: system agnostic datadir
     QDir datadir("/mnt/data/Games/SuperTux/data");
-    m_sprite = SpriteManager::current()->load(datadir.relativeFilePath(path).toStdString());
+    m_sprite = SpriteManager::current()->load(datadir.relativeFilePath(m_spriteFile.toString()).toStdString());
 
     endResetModel();
 }

@@ -28,6 +28,7 @@ public:
 
     inline QUrl spriteFile() { return m_spriteFile; }
     void setSpriteFile(QUrl url);
+    Q_INVOKABLE void loadSprite();
 
     enum ActionRole {
         FramesRole = Qt::UserRole,

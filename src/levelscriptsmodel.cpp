@@ -1,6 +1,9 @@
 #include "levelscriptsmodel.h"
 
-LevelScriptsModel::LevelScriptsModel(QObject *parent): QStandardItemModel(parent) {
+LevelScriptsModel::LevelScriptsModel(QObject *parent):
+    QStandardItemModel(parent),
+    IProjectModel(this)
+{
     connect(
         &SuperTuxThread::instance(), &SuperTuxThread::started,
         this, &LevelScriptsModel::refreshLevel
@@ -101,5 +104,12 @@ QStandardItem* LevelScriptsModel::newItem(ObjectType type, const QString& name, 
     auto item = new QStandardItem(name);
     item->setData(type);
     item->setData("code", Qt::DecorationRole);
+    item->setData(value, IProjectModel::ContentRole);
     return item;
+}
+
+QHash<int, QByteArray> LevelScriptsModel::roleNames() const {
+    auto out = IProjectModel::roleNames();
+    out.insert(QStandardItemModel::roleNames());
+    return out;
 }
